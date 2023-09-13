@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+</head>
+<body>
+    <header>
+        <!-- Selligence Logo -->
+    </header>
+    <main>
+        <form action="search.php" method="post">
+            <input type="reset" value="Clear" />
+            
+            <details>
+                <summary>Triggers</summary>
+                <select multiple>
+                    <option value="1">Trigger 1</option>
+                    <option value="2">Trigger 2</option>
+                    <option value="3">Trigger 3</option>
+                    <option value="4">Trigger 4</option>
+                    <option value="5">Trigger 5</option>
+                </select>
+            </details>
+            
+            <input type="text" name="search" placeholder="Search">
+            <input type="submit" value="Search">
+        </form>
+        <form>
+            <section><button></button></section>
+
+
+        <table>
+            <caption>Your search returned 590950 results</caption>
+            <tr>
+                <th>Person</th>
+                <th>Latest event</th>
+            </tr>
+            {{ range .Results }}
+            <tr>
+                <td>{{ .Name }}</td>
+                <td>{{ .LatestEvent.Title }}</td>
+            </tr>
+            {{ end }}
+        </table>
+        </form>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
