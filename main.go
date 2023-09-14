@@ -5,10 +5,11 @@ import (
     "log"
     "net/http"
     "html/template"
+    "strconv"
 )
 
 type Results struct {
-    Events []Event
+    People []Person
     TotalCount int
 }
 
@@ -23,19 +24,53 @@ type Person struct {
 }
 
 func main() {
-    fmt.Println("Hello, World!")
 
     h1 := func(w http.ResponseWriter, r *http.Request) {
 		// use a template to render the search results
 		t  := template.Must(template.ParseFiles("index.html"))
-        people := map[string][]Person{
-            "Results": {
-                {Name: "John", LatestEvent: Event{Title: "Birthday", EventType: 1}},
-                {Name: "Jane", LatestEvent: Event{Title: "Wedding", EventType: 2}},
-            },
-            "Count": 
+
+        data := []Person{
+                Person{
+                    Name: "John",
+                    LatestEvent: Event{
+                        Title: "John's Event",
+                        EventType: 1,
+                    },
+                },
+                Person{
+                    Name: "Jane",
+                    LatestEvent: Event{
+                        Title: "Jane's Event",
+                        EventType: 2,
+                    },
+                },
+            }
+
+        eventTypeString := r.URL.Query().Get("eventType")
+        subset := []Person{}
+        eventType, err := strconv.Atoi(eventTypeString)
+
+        if (err != nil) {
+            subset = data
+        } else {
+            for _, p := range data {
+                if (p.LatestEvent.EventType == eventType) {
+                    subset = append(subset, p)
+                }
+            }
         }
-        t.Execute(w, people)
+
+        results := Results{
+            People: subset,
+            TotalCount: len(subset),
+        }
+
+        if (r.Header.Get("Hx-Target") == "results") {
+            t.ExecuteTemplate(w, "results", results)
+            return
+        }
+
+        t.Execute(w, results)
 	}
     http.HandleFunc("/", h1)
 

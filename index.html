@@ -2,18 +2,26 @@
 <head>
     <meta charset="utf-8" />
     <title>Search</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
 </head>
 <body>
     <header>
         <!-- Selligence Logo -->
     </header>
     <main>
-        <form action="search.php" method="post">
+        <form 
+            hx-get="/" 
+            hx-target="#results" 
+            hx-push-url="true" 
+            hx-trigger="change" 
+            action="/" 
+            method="get"
+        >
             <input type="reset" value="Clear" />
             
             <details>
                 <summary>Triggers</summary>
-                <select multiple>
+                <select name="eventType" multiple>
                     <option value="1">Trigger 1</option>
                     <option value="2">Trigger 2</option>
                     <option value="3">Trigger 3</option>
@@ -21,28 +29,29 @@
                     <option value="5">Trigger 5</option>
                 </select>
             </details>
-            
-            <input type="text" name="search" placeholder="Search">
-            <input type="submit" value="Search">
+            <noscript>
+                <input type="submit" value="Search" />
+            </noscript>
+            <input type="submit" name="modifier" value="Save as smart search" />
         </form>
-        <form>
-            <section><button></button></section>
-
-
-        <table>
-            <caption>Your search returned 590950 results</caption>
-            <tr>
-                <th>Person</th>
-                <th>Latest event</th>
-            </tr>
-            {{ range .Results }}
-            <tr>
-                <td>{{ .Name }}</td>
-                <td>{{ .LatestEvent.Title }}</td>
-            </tr>
-            {{ end }}
-        </table>
+        {{ block "results" . }}
+        <form id="results" action="/action" method="post">
+            <section><input type="submit" value=""></section>
+            <table>
+                <caption>Your search returned {{ .TotalCount }} results</caption>
+                <tr>
+                    <th>Person</th>
+                    <th>Latest event</th>
+                </tr>
+                {{ range .People }}
+                <tr>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .LatestEvent.Title }}</td>
+                </tr>
+                {{ end }}
+            </table>
         </form>
+        {{ end }}
     </main>
     <footer>
     </footer>
