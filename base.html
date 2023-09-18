@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Search</title>
+    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter" />
+    <style>
+/* Remove the default triangle */
+summary {
+    user-select: none;
+}
+
+/* Create a new custom triangle on the right side */
+summary::after {
+  margin-left: auto;
+  display: inline-block;
+  content: '›';
+  transition: 0.2s;
+  position: absolute;
+  right: 0;
+}
+
+details[open] > summary::after {
+  transform: rotate(90deg);
+}
+    </style>
+</head>
+<body class="font-[Inter]">
+    <header>
+    </header>
+    {{ template "main" . }}
+    <aside id="pop-out" class="absolute inset-y-3 right-3"></aside>
+    <aside id="fullscreen-overlay" class=""></aside>
+    <footer>
+    </footer>
+</body>
+</html>

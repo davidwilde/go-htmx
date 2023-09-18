@@ -1,0 +1,47 @@
+{{ define "main" }} {{ block "fullscreen-overlay" . }}
+<main
+  class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+>
+  <form
+    method="post"
+    action="/smart-search"
+    class="w-96 h-96 p-6 bg-white rounded-lg shadow border border-zinc-200 border-opacity-90 flex-col justify-start items-start gap-6 inline-flex"
+  >
+    <h2>Save as a Smart Search</h2>
+    <label for="name">Name</label>
+    <input
+      type="text"
+      name="name"
+      placeholder="Name your Search"
+      class="w-full h-9 px-3 bg-white rounded-lg shadow border border-zinc-200 border-opacity-90"
+    />
+    <fieldset>
+      <legend>Syncing</legend>
+      <label for="sync-by-salesforce"
+        ><input
+          type="checkbox"
+          name="sync-by-salesforce"
+          class="w-5 h-5 bg-white rounded-lg shadow border border-zinc-200 border-opacity-90"
+        />
+        Via Salesforce</label
+      >
+      <input
+        type="checkbox"
+        name="sync-by-email"
+        class="w-5 h-5 bg-white rounded-lg shadow border border-zinc-200 border-opacity-90"
+      />
+      <label for="sync-by-email">Sync by Email</label>
+    </fieldset>
+    <label for="sync-frequency">Sync Frequency</label>
+    <select>
+      <option value="1">Once a day</option>
+      <option value="2">Once a week</option>
+    </select>
+    <input
+      class="w-36 h-7 px-2.5 py-1.5 bg-indigo-700 rounded shadow justify-start items-center gap-2.5 inline-flex"
+      type="submit"
+      value="Save Smart Search"
+    />
+  </form>
+</main>
+{{ end }} {{ end }}

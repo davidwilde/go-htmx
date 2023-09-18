@@ -1,59 +1,73 @@
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <title>Search</title>
-    <script src="https://unpkg.com/htmx.org@1.9.5"></script>
-</head>
-<body>
-    <header>
-        <!-- Selligence Logo -->
-    </header>
-    <main>
-        <form 
-            hx-get="/" 
-            hx-target="#results" 
-            hx-push-url="true" 
-            hx-trigger="change" 
-            action="/" 
-            method="get"
+{{ define "main" }}
+<main class="flex">
+    <form 
+        hx-get="/" 
+        hx-target="#results" 
+        hx-push-url="true" 
+        hx-trigger="change" 
+        action="/" 
+        method="get"
+        class="m-0 w-72 h-screen outline outline-zinc-200 outline-opacity-90 grid"
         >
-            <input type="reset" value="Clear" />
-            
-            <details>
-                <summary>Triggers</summary>
-                <select name="eventType" multiple>
-                    <option value="1">Trigger 1</option>
-                    <option value="2">Trigger 2</option>
-                    <option value="3">Trigger 3</option>
-                    <option value="4">Trigger 4</option>
-                    <option value="5">Trigger 5</option>
-                </select>
-            </details>
-            <noscript>
-                <input type="submit" value="Search" />
-            </noscript>
-            <input type="submit" name="modifier" value="Save as smart search" />
-        </form>
-        {{ block "results" . }}
-        <form id="results" action="/action" method="post">
-            <section><input type="submit" value=""></section>
-            <table>
-                <caption>Your search returned {{ .TotalCount }} results</caption>
-                <tr>
-                    <th>Person</th>
-                    <th>Latest event</th>
-                </tr>
-                {{ range .People }}
-                <tr>
-                    <td>{{ .Name }}</td>
-                    <td>{{ .LatestEvent.Title }}</td>
-                </tr>
-                {{ end }}
-            </table>
-        </form>
-        {{ end }}
-    </main>
-    <footer>
-    </footer>
-</body>
-</html>
+        <div class="w-72 h-9 pl-4 pr-2 py-2 bg-white outline outline-zinc-200 outline-opacity-90 justify-between items-start inline-flex">
+            <div class="grow shrink basis-0 h-5 justify-between items-center flex">
+                <div class="text-slate-700 text-sm font-medium font-['Inter'] leading-none">1 filter applied</div>
+                <input type="reset" value="×" class="w-6 h-5 p-0 bg-white rounded-md border border-zinc-200 border-opacity-90 justify-start items-start gap-1 inline-flex" />          
+            </div>
+        </div>
+
+        <details class="w-full self-stretch px-4 py-2 bg-white outline outline-zinc-200 outline-opacity-90 justify-between items-center inline-flex">
+            <summary class="w-full flex flex-col relative">
+                <header class="flex items-center">
+                <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6.00016 12.1667H2.3335M4.3335 8.5H1.3335M6.00016 4.83333H2.66683M11.3335 2.5L6.93587 8.65667C6.74123 8.92917 6.64391 9.06542 6.64812 9.17902C6.65179 9.27792 6.69921 9.37008 6.77756 9.43055C6.86755 9.5 7.03499 9.5 7.36986 9.5H10.6668L10.0002 14.5L14.3978 8.34333C14.5924 8.07083 14.6898 7.93458 14.6855 7.82098C14.6819 7.72208 14.6344 7.62992 14.5561 7.56945C14.4661 7.5 14.2987 7.5 13.9638 7.5H10.6668L11.3335 2.5Z" stroke="#4E596A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Triggers</span>
+                </header>
+                <div class="w-28 h-5 px-1.5 py-1 bg-purple-100 rounded-sm justify-center items-center gap-1 inline-flex">
+  <div class="text-slate-800 text-xs font-medium font-['Inter'] leading-none">Digital Designer</div>
+  <div class="justify-center items-center gap-2.5 flex"></div>
+</div>
+            </summary>
+            <select name="eventType" multiple>
+                <option value="1">Trigger 1</option>
+                <option value="2">Trigger 2</option>
+                <option value="3">Trigger 3</option>
+                <option value="4">Trigger 4</option>
+                <option value="5">Trigger 5</option>
+            </select>
+        </details>
+        <noscript>
+            <input type="submit" value="Search" />
+        </noscript>
+        <button 
+            hx-get="/smart-search"
+            hx-target="#fullscreen-overlay"
+            hx-push-url="false"
+            type="submit"
+            class="absolute bottom-0 text-slate-600 text-xs font-medium font-['Inter'] w-60 py-2 px-3 bg-white rounded-lg shadow outline outline-zinc-200 outline-opacity-90 justify-center items-center gap-2 inline-flex m-4" type="submit" name="action" value="save-as-smart-search">
+            <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3.49967 14.6667V11.3334M3.49967 4.66671V1.33337M1.83301 3.00004H5.16634M1.83301 13H5.16634M9.16634 2.00004L8.01022 5.00595C7.82222 5.49477 7.72821 5.73918 7.58203 5.94476C7.45247 6.12697 7.29327 6.28617 7.11107 6.41573C6.90548 6.56191 6.66107 6.65591 6.17225 6.84392L3.16634 8.00004L6.17225 9.15616C6.66107 9.34417 6.90548 9.43817 7.11107 9.58435C7.29327 9.71391 7.45247 9.87311 7.58203 10.0553C7.72821 10.2609 7.82222 10.5053 8.01022 10.9941L9.16634 14L10.3225 10.9941C10.5105 10.5053 10.6045 10.2609 10.7507 10.0553C10.8802 9.87311 11.0394 9.71391 11.2216 9.58435C11.4272 9.43817 11.6716 9.34417 12.1604 9.15616L15.1663 8.00004L12.1604 6.84392C11.6716 6.65591 11.4272 6.56191 11.2216 6.41573C11.0394 6.28617 10.8802 6.12697 10.7507 5.94476C10.6045 5.73918 10.5105 5.49477 10.3225 5.00595L9.16634 2.00004Z" stroke="#2F0EF5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>Save as smart search</button>
+
+    </form>
+    {{ block "results" . }}
+    <form id="results" action="/action" method="post" class="mx-6">
+        <number>{{ .TotalCount }}</number>
+        <section><input type="submit" value=""></section>
+        <table>
+            <tr class="border-y border-y-zinc-200 text-gray-500 text-xs font-medium">
+                <th class="border-r border-r-zinc-200 w-56 h-9 px-3 align-left">Name</th>
+                <th class="">Latest event</th>
+            </tr>
+            {{ range .People }}
+            <tr class="border-b border-zinc-200 border-opacity-90 ">
+                <td class="w-56 h-10 px-2 py-1 bg-white border-r border-zinc-200 border-opacity-90 justify-start items-center gap-2.5 inline-flex"><a href="./person" hx-post="./person" hx-target="#pop-out">{{ .Name }}</a></td>
+                <td class="w-56 h-10 px-2 py-1 bg-white">{{ .LatestEvent.Title }}</td>
+            </tr>
+            {{ end }}
+        </table>
+    </form>
+</main>
+{{ end }}
+{{ end }}
