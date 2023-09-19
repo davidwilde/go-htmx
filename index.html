@@ -45,7 +45,11 @@
             hx-target="#fullscreen-overlay"
             hx-push-url="false"
             type="submit"
-            class="absolute bottom-0 text-slate-600 text-xs font-medium font-['Inter'] w-60 py-2 px-3 bg-white rounded-lg shadow outline outline-zinc-200 outline-opacity-90 justify-center items-center gap-2 inline-flex m-4" type="submit" name="action" value="save-as-smart-search">
+            class="absolute bottom-0 text-slate-600 text-xs font-medium font-['Inter'] w-60 py-2 px-3 bg-white rounded-lg shadow outline outline-zinc-200 outline-opacity-90 justify-center items-center gap-2 inline-flex m-4"
+            type="submit"
+            name="action"
+            value="save-as-smart-search"
+        >
             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3.49967 14.6667V11.3334M3.49967 4.66671V1.33337M1.83301 3.00004H5.16634M1.83301 13H5.16634M9.16634 2.00004L8.01022 5.00595C7.82222 5.49477 7.72821 5.73918 7.58203 5.94476C7.45247 6.12697 7.29327 6.28617 7.11107 6.41573C6.90548 6.56191 6.66107 6.65591 6.17225 6.84392L3.16634 8.00004L6.17225 9.15616C6.66107 9.34417 6.90548 9.43817 7.11107 9.58435C7.29327 9.71391 7.45247 9.87311 7.58203 10.0553C7.72821 10.2609 7.82222 10.5053 8.01022 10.9941L9.16634 14L10.3225 10.9941C10.5105 10.5053 10.6045 10.2609 10.7507 10.0553C10.8802 9.87311 11.0394 9.71391 11.2216 9.58435C11.4272 9.43817 11.6716 9.34417 12.1604 9.15616L15.1663 8.00004L12.1604 6.84392C11.6716 6.65591 11.4272 6.56191 11.2216 6.41573C11.0394 6.28617 10.8802 6.12697 10.7507 5.94476C10.6045 5.73918 10.5105 5.49477 10.3225 5.00595L9.16634 2.00004Z" stroke="#2F0EF5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>Save as smart search</button>
@@ -56,14 +60,41 @@
         <number>{{ .TotalCount }}</number>
         <section><input type="submit" value=""></section>
         <table>
-            <tr class="border-y border-y-zinc-200 text-gray-500 text-xs font-medium">
-                <th class="border-r border-r-zinc-200 w-56 h-9 px-3 align-left">Name</th>
-                <th class="">Latest event</th>
+            <tr class="">
+                <th class="">Name</th>
+                <th>Actions</th>
+                <th>Latest event</th>
             </tr>
             {{ range .People }}
-            <tr class="border-b border-zinc-200 border-opacity-90 ">
-                <td class="w-56 h-10 px-2 py-1 bg-white border-r border-zinc-200 border-opacity-90 justify-start items-center gap-2.5 inline-flex"><a href="./person" hx-post="./person" hx-target="#pop-out">{{ .Name }}</a></td>
-                <td class="w-56 h-10 px-2 py-1 bg-white">{{ .LatestEvent.Title }}</td>
+            <tr class="">
+                <td class="">
+                    <input type="checkbox" class="w-4 h-4 relative bg-white rounded-md border border-neutral-300"></div>
+                    <a href="./person" hx-post="./person" hx-target="#pop-out">{{ .Name }}</a>
+                </td>
+                <td class="">
+                        <button class="w-6 px-1.5 py-0.5 bg-white rounded-md border border-zinc-200 border-opacity-90 justify-start items-center gap-1 flex"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M0.19744 11.9898H2.68436V3.98826H0.19744V11.9898ZM2.4596 2.46997C2.72951 2.19999 2.8819 1.83436 2.88361 1.4526C2.88361 1.16739 2.79939 0.888221 2.64092 0.65108C2.48246 0.413938 2.25724 0.229115 1.99373 0.119985C1.73022 0.0108547 1.44026 -0.0176803 1.16053 0.0379883C0.880806 0.093657 0.623872 0.231029 0.422221 0.432731C0.22057 0.634433 0.0832625 0.891404 0.027664 1.17115C-0.0279345 1.45089 0.000672842 1.74083 0.109869 2.00432C0.219064 2.2678 0.403944 2.49298 0.641125 2.65139C0.878306 2.80979 1.15713 2.8943 1.44235 2.89423C1.8241 2.89242 2.1897 2.73995 2.4596 2.46997ZM9.51458 11.9898H11.999L12.0001 7.60027C12.0001 5.44541 11.5359 3.78902 9.01755 3.78902C8.54514 3.77199 8.07693 3.88316 7.6626 4.11073C7.24826 4.33829 6.90325 4.67377 6.66417 5.08157H6.63097V3.98826H4.24546V11.9894H6.73023V8.03124C6.73023 6.98738 6.92803 5.97673 8.22238 5.97673C9.49797 5.97673 9.51458 7.1711 9.51458 8.09874V11.9898Z" fill="#949FB1"/>
+                            </svg>
+                        </button>
+                        <button class="rounded-md border border-zinc-200 border-opacity-90 justify-start items-center flex">
+                          <div class="px-1.5 py-0.5 bg-white border border-zinc-200 border-opacity-90 justify-start items-center gap-1 flex">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M1.3335 4.66663L6.77678 8.47692C7.21756 8.78547 7.43795 8.93974 7.67767 8.9995C7.88943 9.05228 8.1109 9.05228 8.32265 8.9995C8.56238 8.93974 8.78277 8.78547 9.22355 8.47692L14.6668 4.66663M4.5335 13.3333H11.4668C12.5869 13.3333 13.147 13.3333 13.5748 13.1153C13.9511 12.9236 14.2571 12.6176 14.4488 12.2413C14.6668 11.8134 14.6668 11.2534 14.6668 10.1333V5.86663C14.6668 4.74652 14.6668 4.18647 14.4488 3.75864C14.2571 3.38232 13.9511 3.07636 13.5748 2.88461C13.147 2.66663 12.5869 2.66663 11.4668 2.66663H4.5335C3.41339 2.66663 2.85334 2.66663 2.42552 2.88461C2.04919 3.07636 1.74323 3.38232 1.55148 3.75864C1.3335 4.18647 1.3335 4.74652 1.3335 5.86663V10.1333C1.3335 11.2534 1.3335 11.8134 1.55148 12.2413C1.74323 12.6176 2.04919 12.9236 2.42552 13.1153C2.85334 13.3333 3.41339 13.3333 4.5335 13.3333Z" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M4 6L8 10L12 6" stroke="#4E596A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                     
+                          <div class="px-1.5 py-0.5 bg-white border border-zinc-200 border-opacity-90 justify-start items-center gap-1 flex">
+                            <div class="w-4 h-4 relative"></div>
+                            <div class="w-4 h-4 relative"></div>
+                          </div>
+                        </div>
+                        <div class="p-1 bg-white rounded-md border border-zinc-200 border-opacity-90 justify-start items-center gap-2.5 flex">
+                          <div class="w-3.5 h-3.5 relative"></div>
+                        </div>
+                    </td>
+                <td class="">{{ .LatestEvent.Title }}</td>
             </tr>
             {{ end }}
         </table>

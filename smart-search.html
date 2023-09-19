@@ -2,6 +2,25 @@
 <main
   class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
 >
+  {{ if (eq .Action "overwrite") }}
+  <form
+    hx-put="/smart-search"
+    hx-target="#fullscreen-overlay"
+    method="post"
+    action="/smart-search/overwrite"
+    class="w-96 h-96 p-6 bg-white rounded-lg shadow border border-zinc-200 border-opacity-90 flex-col justify-start items-start gap-6 inline-flex"
+  >
+    <h2>Save smart search to rewrite</h2>
+    <table>
+      {{ range .SmartSearches }}
+      <tr>
+        <td>{{ .Name }}</td>
+      </tr>
+      <input type="submit" value="Save Smart Search" />
+      {{ end }} 
+    </table>
+  </form>
+  {{ else }}
   <form
     method="post"
     action="/smart-search"
@@ -37,11 +56,22 @@
       <option value="1">Once a day</option>
       <option value="2">Once a week</option>
     </select>
+    <button
+      class="w-36 h-7 px-2.5 py-1.5 bg-indigo-700 rounded shadow justify-start items-center gap-2.5 inline-flex"
+      type="submit"
+      name="action"
+      value="overwrite"
+      hx-get="/smart-search"
+      hx-target="#fullscreen-overlay"
+    >
+      Overwrite
+    </button>
     <input
       class="w-36 h-7 px-2.5 py-1.5 bg-indigo-700 rounded shadow justify-start items-center gap-2.5 inline-flex"
       type="submit"
       value="Save Smart Search"
     />
   </form>
+  {{ end }}
 </main>
 {{ end }} {{ end }}

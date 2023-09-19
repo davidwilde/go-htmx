@@ -31,8 +31,8 @@ details[open] > summary::after {
     <header>
     </header>
     {{ template "main" . }}
-    <aside id="pop-out" class="absolute inset-y-3 right-3"></aside>
-    <aside id="fullscreen-overlay" class=""></aside>
+    <aside id="pop-out" class="absolute inset-y-3 right-3 p-6 bg-white rounded-xl shadow border border-zinc-200 border-opacity-90 flex-col justify-start items-start gap-3 inline-flex"></aside>
+    <dialog open id="fullscreen-overlay" class=""></dialog>
     <footer>
     </footer>
 </body>
